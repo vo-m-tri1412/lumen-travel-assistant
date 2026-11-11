@@ -123,7 +123,7 @@ python evaluate.py --update-readme
 Script embed toàn bộ cẩm nang một lần, chạy từng câu hỏi và lưu ID/điểm/câu trả lời vào `evaluation/results.json`. Bảng bên dưới chỉ được cập nhật từ lần chạy đó; kết quả mock không thay cho kết quả model thật.
 
 <!-- TEST_RESULTS_START -->
-Chưa chạy đánh giá model thật: cần cấu hình Ollama + Pinggy. Tập `evaluation/questions.json` có 8 câu: 3 trả lời được, 1 diễn đạt lại, 2 ngoài cẩm nang và 2 tình huống khó.
+Chưa chạy đánh giá model thật: cần cấu hình Ollama + Pinggy. Tập `evaluation/questions.json` có 9 câu: 3 trả lời được, 1 diễn đạt lại, 2 ngoài cẩm nang và 3 tình huống khó. T09 kiểm tra tính tổng tiền từ các giá đã có, nhằm đánh giá giới hạn của câu trả lời dạng trích xuất.
 <!-- TEST_RESULTS_END -->
 
 ## Cấu trúc
@@ -145,6 +145,7 @@ tests/                  Kiểm thử logic và luồng Streamlit
 
 - Cẩm nang nhỏ, không có thời tiết trực tiếp, tình trạng chỗ trống hoặc mọi loại giá vé. Giá/giờ trong nguồn có thể thay đổi sau ngày đối chiếu.
 - Trích dẫn được kiểm tra theo chuỗi gốc nên có thể từ chối một câu trả lời đúng nếu model diễn đạt lại. Kiểm tra đoạn trích không chứng minh rằng đoạn đó thực sự trả lời đủ câu hỏi; lỗi chọn bằng chứng vẫn có thể xảy ra.
+- Phiên bản này không có công cụ tính toán. Câu hỏi yêu cầu suy ra tổng tiền, dù các đơn giá đã có, có thể bị từ chối bởi quy tắc chỉ chấp nhận đoạn trích nguyên văn.
 - Lịch sử được lưu để xem trong phiên; việc truy xuất xử lý từng câu độc lập. Câu như “ở đó” nên viết lại với tên địa điểm.
 - Ngưỡng cosine phụ thuộc dữ liệu và embedding; không phải xác suất đúng. Máy chủ Colab/Pinggy cần đang hoạt động.
 - Có dùng trợ lý AI để hỗ trợ soạn mã và nội dung trình bày. Các kết quả kiểm thử phải được chạy riêng và không suy ra từ gợi ý của công cụ.
