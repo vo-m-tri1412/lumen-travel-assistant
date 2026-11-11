@@ -12,3 +12,6 @@ address = "127.0.0.1"
 
 [browser]
 gatherUsageStats = false
+
+[global]
+developmentMode = false
