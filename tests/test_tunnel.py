@@ -1,5 +1,5 @@
 import unittest
-from server.tunnel import extract_tunnel_url
+from server.tunnel import extract_tunnel_url, select_tunnel_url
 
 
 class TunnelTests(unittest.TestCase):
@@ -12,6 +12,13 @@ class TunnelTests(unittest.TestCase):
 
     def test_terminal_color_codes_do_not_split_the_url(self):
         self.assertEqual(extract_tunnel_url("https://sample.a.free.\x1b[34mpinggy.link\x1b[0m"),"https://sample.a.free.pinggy.link")
+
+    def test_current_pinggy_api_domain_is_supported(self):
+        urls={"urls":["http://sample.run.pinggy-free.link","https://sample.run.pinggy-free.link"]}
+        self.assertEqual(select_tunnel_url(urls),"https://sample.run.pinggy-free.link")
+
+    def test_dashboard_and_non_https_api_urls_are_rejected(self):
+        self.assertIsNone(select_tunnel_url({"urls":["https://dashboard.pinggy.io","http://sample.run.pinggy-free.link"]}))
 
 
 if __name__=="__main__":unittest.main()
