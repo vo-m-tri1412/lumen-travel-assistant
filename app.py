@@ -8,21 +8,30 @@ from rag import GuideIndex, OllamaClient, RagError, answer_question, guide_finge
 
 st.set_page_config(page_title="Lumen Travel · Sài Gòn", page_icon="✦", layout="wide", initial_sidebar_state="expanded")
 st.html("""<style>
-.stApp{background:radial-gradient(ellipse at 90% 0%,#e9e1f8 0,transparent 42%),#fcfaf7}
-.block-container{max-width:1140px;padding-top:2.6rem;padding-bottom:2rem}
-[data-testid="stSidebar"]{background:#f1eee9;border-right:1px solid #e6e0d7}
+.stApp{background:radial-gradient(ellipse at 90% 0%,#f0e8ff 0,transparent 38%),#fcfbff}
+.block-container{max-width:1200px;padding-top:2.2rem;padding-bottom:2rem}
+[data-testid="stSidebar"]{background:#f7f3ff;border-right:1px solid #ece5fa;min-width:205px;max-width:235px}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"]{overflow-wrap:anywhere;font-size:14px}
 h1,h2,h3{letter-spacing:-.035em}h1{font-weight:650!important}
-[data-testid="stForm"]{border:1px solid #e8e1d9;border-radius:24px;padding:25px;background:#ffffffb8}
-[data-testid="stChatMessage"]{border-radius:20px;border:1px solid #ebe5df;background:#fffdfb;padding:20px;margin-bottom:14px}
-[data-testid="stChatInput"]{border-radius:19px}
-.lumen-brand{font-size:29px;font-weight:750;letter-spacing:-1.2px;color:#29283a}
-.lumen-star{color:#7853c8;margin-right:9px}.city-label{font-size:12px;letter-spacing:.14em;color:#8b7d9b;margin-top:3px}
-.welcome{margin:20px 0 25px;padding:34px;border-radius:26px;background:linear-gradient(125deg,#e1f0ea,#eee3f8)}
-.welcome h1{font-size:43px;margin:0 0 12px}.welcome p{color:#695e77;margin:0;font-size:17px}
-.guide-pill{display:inline-block;border:1px solid #cbbfdb;border-radius:30px;padding:5px 13px;margin:17px 7px 0 0;color:#695586;font-size:13px}
-.auth-visual{padding:55px 34px 20px}.auth-visual h1{font-size:52px;line-height:1.12;margin:15px 0 24px}
+[data-testid="stForm"]{border:1px solid #e9e2f5;border-radius:25px;padding:27px;background:white;box-shadow:0 10px 35px #6c40b409}
+[data-testid="stChatMessage"]{border-radius:23px;border:1px solid #ece7f4;background:white;padding:23px;margin-bottom:16px;box-shadow:0 6px 20px #7144ae05}
+[data-testid="stChatInput"]{border-radius:20px;border-color:#dfd1fa;background:white}
+[data-testid="stTextInput"] input{border-radius:11px}
+[data-baseweb="tab-list"]{gap:25px}
+.lumen-brand{font-size:30px;font-weight:750;letter-spacing:-1.2px;color:#292238}
+.lumen-star{display:inline-grid;place-items:center;background:linear-gradient(145deg,#b77bff,#7e3ff2);color:white;width:38px;height:38px;border-radius:13px;margin-right:10px;font-size:24px;box-shadow:0 5px 18px #934af425}
+.city-label{font-size:11px;letter-spacing:.15em;color:#8d7da5;margin:7px 0 0 50px}
+.welcome{position:relative;margin:8px 0 26px;padding:42px 35px;border-radius:28px;background:radial-gradient(ellipse at 0 0,#a9e9ed,transparent 65%),radial-gradient(ellipse at 100% 0,#d6bbff,transparent 68%),linear-gradient(#f3edff,#ffffff);min-height:210px;text-align:center;border:1px solid #ece6fc}
+.welcome:after{content:'✧';position:absolute;right:28px;top:18px;font-size:48px;color:#ab82e66b}
+.welcome h1{font-size:44px;margin:14px 0 13px;background:linear-gradient(90deg,#2887ff,#8351ee);background-clip:text;-webkit-background-clip:text;color:transparent}
+.welcome p{color:#75658d;margin:0;font-size:16px}
+.guide-pill{display:inline-block;background:#ffffffa8;border:1px solid #d9c8f5;border-radius:30px;padding:7px 15px;margin:16px 6px 0 0;color:#7950b4;font-size:14px}
+.auth-visual{position:relative;padding:51px 35px 43px;border-radius:29px;margin-top:28px;background:radial-gradient(ellipse at 0 0,#b1edf0,transparent 68%),radial-gradient(ellipse at 100% 0,#d5baff,transparent 69%),#faf8ff;border:1px solid #ede6fa;min-height:350px}
+.auth-visual:after{content:'✧';position:absolute;right:23px;top:18px;font-size:49px;color:#b598de90}
+.auth-visual h1{font-size:52px;line-height:1.15;margin:15px 0 24px;background:linear-gradient(110deg,#2a89f9,#9350eb);background-clip:text;-webkit-background-clip:text;color:transparent}
 .source-title{font-weight:650;color:#674b9a;margin-top:9px}.source-score{font-size:12px;color:#887b95}
-button[kind="primary"]{border-radius:12px}.stButton button{border-radius:12px}
+button[kind="primary"]{border-radius:13px;background:linear-gradient(105deg,#a353f2,#7352e8);border:0;box-shadow:0 5px 17px #8c4ae626}.stButton button{border-radius:13px;border-color:#e3d9f3}
+[data-testid="stToolbar"]{visibility:hidden}
 footer{visibility:hidden}
 </style>""")
 
@@ -54,11 +63,10 @@ def login_page(settings):
     with left:
         brand()
         st.html('''<div class="auth-visual"><h1>Khám phá<br>Sài Gòn.</h1>
-<p>Hỏi điều bạn muốn biết, xem nguồn cho từng câu trả lời.</p>
 <span class="guide-pill">Bảo tàng</span><span class="guide-pill">Dạo phố</span><span class="guide-pill">Văn hóa</span>
 </div>''')
     with right:
-        st.subheader("Bắt đầu hành trình")
+        st.subheader("Chào bạn")
         if not settings.firebase_api_key:
             st.info("Ứng dụng chưa được cấu hình đăng nhập. Xem README để thiết lập Firebase.")
         tabs = st.tabs(["Đăng nhập", "Tạo tài khoản"])
@@ -94,9 +102,7 @@ def chat_page(settings, session):
     with st.sidebar:
         brand()
         st.divider()
-        st.caption("ĐANG ĐĂNG NHẬP")
         st.write(session.email)
-        st.caption("16 mục trong cẩm nang")
         selected_category = st.selectbox("Chủ đề", [None, *categories],
                                          format_func=lambda value: categories.get(value, "Tất cả"))
         if st.button("Đăng xuất", use_container_width=True):

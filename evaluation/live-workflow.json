@@ -1,0 +1,115 @@
+{
+  "anonymous_chat_hidden": true,
+  "real_firebase_signin": true,
+  "questions": [
+    {
+      "question": "Vé người lớn tham quan Dinh Độc Lập giá bao nhiêu?",
+      "answer": "Giá vé niêm yết ghi nhận ngày 11/11/2026: người lớn 80.000 đồng; sinh viên và người cao tuổi 40.000 đồng; trẻ từ 6 đến dưới 16 tuổi 20.000 đồng. [G01]",
+      "hits": [
+        {
+          "entry": {
+            "id": "G01",
+            "title": "Dinh Độc Lập",
+            "text": "Dinh Độc Lập ở 135 Nam Kỳ Khởi Nghĩa. Giờ mở cửa thông thường là 07:00–18:00 mỗi ngày, trừ trường hợp đặc biệt được thông báo riêng. Giá vé niêm yết ghi nhận ngày 11/11/2026: người lớn 80.000 đồng; sinh viên và người cao tuổi 40.000 đồng; trẻ từ 6 đến dưới 16 tuổi 20.000 đồng.",
+            "source": "https://dinhdoclap.gov.vn/",
+            "category": "heritage",
+            "tags": [
+              "lịch sử",
+              "kiến trúc",
+              "giá vé",
+              "giờ mở cửa",
+              "Dinh Thống Nhất"
+            ]
+          },
+          "score": 0.7429426755303847
+        },
+        {
+          "entry": {
+            "id": "G16",
+            "title": "Bến Bạch Đằng và Saigon Waterbus",
+            "text": "Bến Bạch Đằng gần công viên Bạch Đằng và phố đi bộ Nguyễn Huệ. Saigon Waterbus giúp ngắm thành phố từ sông. Trang đơn vị vận hành niêm yết vé đi và về 30.000 đồng, ghi nhận ngày 11/11/2026; cần kiểm tra lịch chuyến trước khi đi.",
+            "source": "https://saigonwaterbus.com/",
+            "category": "river_transport",
+            "tags": [
+              "sông Sài Gòn",
+              "giao thông",
+              "ngắm cảnh",
+              "giá vé"
+            ]
+          },
+          "score": 0.47351546416224893
+        },
+        {
+          "entry": {
+            "id": "G05",
+            "title": "Bảo tàng Mỹ thuật Thành phố Hồ Chí Minh",
+            "text": "Bảo tàng Mỹ thuật giới thiệu điêu khắc, gốm Việt Nam, mỹ thuật Nam Bộ và nghệ thuật đương đại trong một công trình kết hợp nét kiến trúc Đông–Tây.",
+            "source": "https://vietnam.travel/things-to-do/10-tourist-spots-not-be-missed-ho-chi-minh-city/",
+            "category": "museum",
+            "tags": [
+              "nghệ thuật",
+              "kiến trúc",
+              "điêu khắc"
+            ]
+          },
+          "score": 0.402749493865897
+        }
+      ]
+    },
+    {
+      "question": "Ngày mai ở TP.HCM có mưa lúc 15 giờ không?",
+      "answer": "Mình chưa biết. Cẩm nang hiện chưa có thông tin để trả lời câu hỏi này.",
+      "hits": [
+        {
+          "entry": {
+            "id": "G05",
+            "title": "Bảo tàng Mỹ thuật Thành phố Hồ Chí Minh",
+            "text": "Bảo tàng Mỹ thuật giới thiệu điêu khắc, gốm Việt Nam, mỹ thuật Nam Bộ và nghệ thuật đương đại trong một công trình kết hợp nét kiến trúc Đông–Tây.",
+            "source": "https://vietnam.travel/things-to-do/10-tourist-spots-not-be-missed-ho-chi-minh-city/",
+            "category": "museum",
+            "tags": [
+              "nghệ thuật",
+              "kiến trúc",
+              "điêu khắc"
+            ]
+          },
+          "score": 0.30657380417545743
+        },
+        {
+          "entry": {
+            "id": "G16",
+            "title": "Bến Bạch Đằng và Saigon Waterbus",
+            "text": "Bến Bạch Đằng gần công viên Bạch Đằng và phố đi bộ Nguyễn Huệ. Saigon Waterbus giúp ngắm thành phố từ sông. Trang đơn vị vận hành niêm yết vé đi và về 30.000 đồng, ghi nhận ngày 11/11/2026; cần kiểm tra lịch chuyến trước khi đi.",
+            "source": "https://saigonwaterbus.com/",
+            "category": "river_transport",
+            "tags": [
+              "sông Sài Gòn",
+              "giao thông",
+              "ngắm cảnh",
+              "giá vé"
+            ]
+          },
+          "score": 0.2921021687173141
+        },
+        {
+          "entry": {
+            "id": "G13",
+            "title": "Chợ Tân Định",
+            "text": "Chợ Tân Định nằm trên đường Hai Bà Trưng. Chợ buổi sáng có rau củ, trái cây và các món ăn đường phố.",
+            "source": "https://vietnam.travel/things-to-do/ho-chi-minh-city-itinerary/",
+            "category": "market",
+            "tags": [
+              "chợ địa phương",
+              "ẩm thực",
+              "buổi sáng"
+            ]
+          },
+          "score": 0.2879957746449494
+        }
+      ]
+    }
+  ],
+  "real_model_answers_verified": true,
+  "signout_clears_history": true,
+  "chat_hidden_after_signout": true
+}

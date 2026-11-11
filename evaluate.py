@@ -33,11 +33,12 @@ def evaluate(settings):
 
 
 def markdown_table(report):
-    rows = ["| ID | Câu hỏi | ID mong đợi | ID tìm được | Đúng? | Bước lỗi |",
+    rows = ["| ID | Question (English translation) | Expected IDs | Retrieved IDs | Correct? | Failure stage |",
             "|---|---|---|---|---|---|"]
     for record in report["cases"]:
-        rows.append(f'| {record["id"]} | {record["question"]} | {", ".join(record["expected_ids"]) or "Không có"} | '
-                    f'{", ".join(record["retrieved_ids"])} | {"Có" if record["correct"] else "Không"} | {record["failure_stage"] or "—"} |')
+        question=record.get("question_en",record["question"])
+        rows.append(f'| {record["id"]} | {question} | {", ".join(record["expected_ids"]) or "None"} | '
+                    f'{", ".join(record["retrieved_ids"])} | {"Yes" if record["correct"] else "No"} | {record["failure_stage"] or "—"} |')
     return "\n".join(rows)
 
 

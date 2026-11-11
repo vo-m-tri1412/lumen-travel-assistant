@@ -50,6 +50,11 @@ class RagTests(unittest.TestCase):
                      {"entry_id": "G99", "quote": "Dinh Độc Lập ở 135 Nam Kỳ Khởi Nghĩa."}]:
             self.assertIsNone(checked_answer({"answerable": True, "sentences": [item]}, self.hits))
 
+    def test_case_variation_returns_the_original_source_span(self):
+        quote="dinh độc lập ở 135 nam kỳ khởi nghĩa."
+        answer=checked_answer({"answerable":True,"sentences":[{"entry_id":"G01","quote":quote}]},self.hits)
+        self.assertEqual(answer,"Dinh Độc Lập ở 135 Nam Kỳ Khởi Nghĩa. [G01]")
+
     def test_low_similarity_refuses_without_calling_generator(self):
         index, client = Mock(), Mock()
         index.retrieve.return_value = [{"entry": self.entries[0], "score": .1}]
@@ -94,6 +99,8 @@ class RagTests(unittest.TestCase):
         self.assertFalse(payload["think"])
         self.assertFalse(payload["stream"])
         self.assertEqual(payload["format"]["type"], "object")
+        supplied_guide = json.loads(payload["messages"][1]["content"])["guide"]
+        self.assertIn("Dinh Thống Nhất", supplied_guide[0]["tags"])
 
 
 if __name__ == "__main__": unittest.main()

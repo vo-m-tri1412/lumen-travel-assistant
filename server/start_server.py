@@ -71,8 +71,9 @@ def main():
                     except Exception:pass
             save("prerequisites")
             if any(shutil.which(tool) is None for tool in ["curl","zstd","lspci","lshw","ssh-keygen"]):
-                run(["apt-get","update","-qq"],log)
-                run(["apt-get","install","-y","-qq","curl","ca-certificates","zstd","pciutils","lshw","openssh-client"],log)
+                # Colab provides package lists. Avoid a full mirror refresh;
+                # bound network retries and use IPv4 for notebook containers.
+                run(["apt-get","-o","Acquire::ForceIPv4=true","-o","Acquire::Retries=0","-o","Acquire::http::Timeout=20","-o","Acquire::https::Timeout=20","install","-y","-qq","--no-install-recommends","curl","ca-certificates","zstd","pciutils","lshw","openssh-client"],log,90,{**os.environ,"DEBIAN_FRONTEND":"noninteractive"})
             if not shutil.which("ollama"):
                 save("installing_ollama")
                 run(["bash","-lc","set -o pipefail; curl --retry 3 -fsSL https://ollama.com/install.sh | sh"],log)
