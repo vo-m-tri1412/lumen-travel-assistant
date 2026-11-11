@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+private-notes/
+*.log
+run-local.cmd
