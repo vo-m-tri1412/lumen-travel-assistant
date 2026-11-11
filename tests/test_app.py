@@ -1,8 +1,10 @@
 import os
 import time
 import unittest
+import json
 from pathlib import Path
 from unittest.mock import patch
+from unittest.mock import Mock
 
 from streamlit.testing.v1 import AppTest
 
@@ -50,6 +52,39 @@ class AppTests(unittest.TestCase):
         self.assertEqual(len(app.chat_input), 0)
         self.assertNotIn("messages", app.session_state)
         self.assertNotIn("auth", app.session_state)
+
+    @patch("firebase_client.FirebaseClient.validate")
+    @patch("rag.requests.post")
+    def test_two_questions_reuse_one_cached_guide_embedding(self, post, validate):
+        from streamlit import cache_resource
+        cache_resource.clear()
+        session = AuthSession("test@example.com", "u1", "id", "refresh", time.time()+3600)
+        validate.return_value = session
+
+        def response(url, **kwargs):
+            body=kwargs["json"]
+            result=Mock(ok=True)
+            if url.endswith("/api/embed"):
+                count=len(body["input"])
+                vectors=[[float(i==j) for j in range(16)] for i in range(count)]
+                result.json.return_value={"embeddings":vectors}
+            else:
+                result.json.return_value={"message":{"content":json.dumps({"answerable":True,"sentences":[{"entry_id":"G01","quote":"Dinh Độc Lập ở 135 Nam Kỳ Khởi Nghĩa."}]})}}
+            return result
+
+        post.side_effect=response
+        app=AppTest.from_file(str(APP),default_timeout=20)
+        app.session_state["auth"]=session
+        app.run()
+        app.chat_input[0].set_value("Dinh Độc Lập ở đâu?").run()
+        self.assertFalse(app.exception)
+        self.assertIn("[G01]",app.session_state["messages"][-1]["content"])
+        app.chat_input[0].set_value("Địa chỉ Dinh Độc Lập là gì?").run()
+        self.assertFalse(app.exception)
+        self.assertEqual(len(app.session_state["messages"]),4)
+        full_guide_calls=[call for call in post.call_args_list if call.args[0].endswith("/api/embed") and len(call.kwargs["json"]["input"])==16]
+        self.assertEqual(len(full_guide_calls),1)
+        cache_resource.clear()
 
 
 if __name__ == "__main__": unittest.main()
